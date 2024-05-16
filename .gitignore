@@ -9,7 +9,9 @@
 /coverage
 
 # production
-/build
+/ui/build
+/ui/node_modules
+/ui/scratchpad.txt
 
 # misc
 .DS_Store
