@@ -2,7 +2,7 @@ from llm.base_llm import BaseLLM
 import os
 from openai import OpenAI
 
-os.environ['OPENAI_API_KEY'] = 'your-openai-key'
+os.environ['OPENAI_API_KEY'] = 'Your API key'
 
 class OpenAIILLM(BaseLLM):
 
