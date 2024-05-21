@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from agents.summarizing_agent import SummarizingAgent
 from agents.drawing_agent import DrawingAgent
 from llm.openai_llm import OpenAIILLM
+import utils
 
 app = FastAPI()
 app.add_middleware(
@@ -25,6 +26,8 @@ drawing_agent = DrawingAgent(llm)
 async def get_mermaid(request: CodeRequest):
     summary = summarizing_agent.get_result(request.code)
     mermaid = drawing_agent.get_result(summary)
+    mermaid = utils.fix_mermaid(mermaid)
+    print(mermaid)
     response_body = {
         "mermaid": mermaid
     }
