@@ -2,7 +2,7 @@ from llm.base_llm import BaseLLM
 import os
 from openai import OpenAI
 
-os.environ['OPENAI_API_KEY'] = 'Your API key'
+os.environ['OPENAI_API_KEY'] = 'Your Api Key'
 
 class OpenAIILLM(BaseLLM):
 
@@ -23,5 +23,17 @@ class OpenAIILLM(BaseLLM):
                     "content": user_prompt
                 }
             ],
+        )
+        return response.choices[0].message.content
+    
+    def get_result_with_history(self, system_prompt, chat_history):
+        response = self.client.chat.completions.create(
+            model=self.name,
+            messages=[
+                {
+                    "role": "system", 
+                    "content": system_prompt
+                }
+            ] + chat_history,
         )
         return response.choices[0].message.content
