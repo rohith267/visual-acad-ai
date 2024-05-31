@@ -76,6 +76,15 @@ chat container and messages
   margin-bottom: 20px; /* gives space between messages and the input area */
 }
 
+.user{
+  margin-left: 250px;
+}
+
+.assistant{
+  margin-right: 250px;
+  background: #c0cfc0;
+}
+
 /*
 chat input box and send button
 */

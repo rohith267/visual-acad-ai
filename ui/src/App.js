@@ -9,12 +9,36 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState('');
   const [mermaidChart, setMermaidChart] = useState('');
+  const [summary, setSummary] = useState('');
   const [reloadCounter, setReloadCounter] = useState(0);
 
   const sendMessage = () => {
     if (userInput.trim() !== '') {
-      setMessages([...messages, userInput]);
+      const newMessages = [...messages, {content: userInput, role: 'user'}]
+      setMessages(newMessages);
       setUserInput('');
+      getAIResponse(newMessages);
+    }
+  };
+
+  const getAIResponse = async (messages) => {
+    try {
+      const response = await fetch('http://localhost:8000/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code: code, summary: summary, mermaid: mermaidChart, messages: messages })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setMessages([...messages, {content: result.content, role: 'assistant'}])
+    } catch (error) {
+      console.error('There was an error!', error);
     }
   };
 
@@ -42,6 +66,8 @@ function App() {
 
       const result = await response.json();
       setMermaidChart(result.mermaid);  // Update the Mermaid chart data
+      setSummary(result.summary)
+      setMessages([{content: 'Here is a step by step explanation of the code:\n\n' + result.summary, role: 'assistant'}]);
       setReloadCounter(prev => prev + 1);
     } catch (error) {
       console.error('There was an error!', error);
@@ -83,7 +109,16 @@ function App() {
       <div className="chat-container">
         <div className="messages">
           {messages.map((message, index) => (
-            <div className="message" key={index}>{message}</div>
+            <div className={"message " + message.role} key={index}>
+              {message.content.split('\n').map((line, index) => {
+              return (
+                  <>
+                      {line}
+                      <br />
+                  </>
+              );
+              })}
+            </div>
           ))}
         </div>
         <div className="chat-input-button-container">
