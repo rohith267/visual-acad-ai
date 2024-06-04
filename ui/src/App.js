@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import './App.css';
 import Mermaid from './Mermaid'
 import CodeEditor from '@uiw/react-textarea-code-editor';
-
+import example from './example';
+import Header from './Header';
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState('');
-  const [mermaidChart, setMermaidChart] = useState('');
+  const [mermaidChart, setMermaidChart] = useState(example);
   const [summary, setSummary] = useState('');
   const [reloadCounter, setReloadCounter] = useState(0);
 
@@ -47,7 +48,7 @@ function App() {
   };
 
   const [code, setCode] = useState(
-    `function add(a, b) {\n  return a + b;\n}`
+    `def add(a, b):\n    return a + b`
   );
 
   const sendCodeToServer = async () => {
@@ -75,9 +76,11 @@ function App() {
   };
 
   return (
+    <>
+    <Header />
     <div className="main-container">
       <div className="code-container">
-        <div>
+        <div style={{overflowY: 'auto'}}>
           <CodeEditor
             value={code}
             language="python"
@@ -85,23 +88,25 @@ function App() {
             onChange={(evn) => setCode(evn.target.value)}
             padding={15}
             style={{
-              color: '#9CDCEE',
+              // color: "#383838",
               fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
               textAlign: 'start',
               fontSize: '16px',
-              width: '100%', /* ensure it takes full width of its container */
-              minHeight: '50px', /* minimum height */
-              border: 'none',/*'1px solid #ccc', /* optional, adds a border */
-              backgroundColor: "#303030",
+              minWidth: '630px',
+              minHeight: '330px', 
+              border: 'none',
+              backgroundColor: "#dddddd",
               resize: 'vertical',
-              overflow: 'auto'
             }}
           />
+        </div>
+        <div style={{display:'flex', height:'100%', alignItems:'end'}}>
+          <button className="chat-button generate-button" onClick={sendCodeToServer} >Generate</button>
         </div>
 
       </div>
       <div className="cfg-container">
-          <div className="mermaid-display">
+          <div className="mermaid-display" style={{ width: '100%', height: '100%' }}>
              <Mermaid key={reloadCounter} chart={mermaidChart} />
           </div>
       </div>
@@ -122,7 +127,6 @@ function App() {
           ))}
         </div>
         <div className="chat-input-button-container">
-          <button className="chat-button" onClick={sendCodeToServer}>Generate</button>
           <textarea  
             type="text"
             id="userMsg"
@@ -135,7 +139,7 @@ function App() {
         </div>
       </div>
     </div>
-
+  </>
   );
 }
 

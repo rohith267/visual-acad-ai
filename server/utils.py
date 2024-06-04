@@ -11,6 +11,8 @@ def fix_mermaid(mermaid):
     lines = mermaid.split('\n')
     new_lines = []
     for line in lines:
+        if line[-2:] == 'LR':
+            line = line[:-2] + 'TD'
         new_line =  process_for_pattern(r'\{(.*?)\}$', line)
         new_line =  process_for_pattern(r'\((.*?)\)$', new_line)
         new_line =  process_for_pattern(r'\[(.*?)\]$', new_line)
