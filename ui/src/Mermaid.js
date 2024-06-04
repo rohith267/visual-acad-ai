@@ -1,5 +1,12 @@
-import React from "react";
-import mermaid from "mermaid";
+import mermaid from 'mermaid';
+import React, { useEffect, useRef } from 'react';
+import './App.css';
+
+import {
+  TransformWrapper,
+  TransformComponent,
+  useControls,
+} from "react-zoom-pan-pinch";
 
 mermaid.initialize({
   startOnLoad: true,
@@ -53,11 +60,29 @@ mermaid.initialize({
   fontFamily: "Fira Code"
 });
 
-export default class Mermaid extends React.Component {
-  componentDidMount() {
+const Mermaid = ({ chart }) => {
+
+  useEffect(() => {
     mermaid.contentLoaded();
-  }
-  render() {
-    return <div className="mermaid">{this.props.chart}</div>;
-  }
-}
+  }, []);
+
+  return (
+    <div style={{height: '100%', width: '100%'}}>
+      <TransformWrapper
+      initialScale={2}
+      minScale={0.5}
+    >
+      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <>
+          <TransformComponent 
+            wrapperStyle={{ width: "100%", height: "100%" }}>
+            <div className="mermaid">{chart}</div>
+          </TransformComponent>
+        </>
+      )}
+    </TransformWrapper>
+  </div>
+  );
+};
+
+export default Mermaid;

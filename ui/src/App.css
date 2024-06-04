@@ -2,27 +2,23 @@
 
 .main-container {
   display: grid;
-  grid-template-columns: 2fr 3fr; /* maintains the column size ratio */
+  grid-template-columns: 1fr 1fr; /* maintains the column size ratio */
   grid-template-rows: 1fr 1fr; /* both the CFG area and chat container will share the space equally */
-  gap: 8px;
-  height: 100vh;
-  padding: 0px;
+  gap: 5px;
+  height: 95vh;
+  padding: 5px;
   box-sizing: border-box;
 }
 
 .code-container {
   grid-column: 1 / span 1;
-  grid-row: 1 / span 2; 
-  background-color: #303030;
-  align-items: start;
-  color: #dcdcdc;
+  grid-row: 1 / span 1;
+  background-color: #dddddd;
+  padding: 16px;
+  overflow-y: auto; /*ensures scrollbar if content overflows*/
+  border: 2px solid #393939;
   display: flex;
-  border-right: 2px solid rgb(52, 173, 16);
-  overflow-y: auto;
-
-
 }
-
 
 textarea#codeInput {
   width: 100%;
@@ -34,16 +30,16 @@ textarea#codeInput {
   font-size: 16px;
   font-family: 'Courier New', monospace;
   resize: none;
+  overflow-y: auto;
 }
 
 .cfg-container {
   grid-column: 2 / span 1;
-  grid-row: 1 / span 1;
+  grid-row: 1 / span 2; 
   background-color: #fff5e5;
   padding: 16px;
   overflow-y: auto; /*ensures scrollbar if content overflows*/
-  border-radius: 10px;
-  border: 2px solid rgb(52, 173, 16);
+  border: 2px solid #393939;
 }
 
 /*
@@ -53,10 +49,8 @@ chat container and messages
   display: flex;
   flex-direction: column;
   background: #d4edda; /* background color for chat area */
-  border-radius: 10px;
   overflow-y: auto; /*ensures scrollbar if content overflows*/
-  
-  border: 2px solid rgb(52, 173, 16);
+  border: 2px solid #393939;
 }
 
 .messages {
@@ -114,11 +108,15 @@ chat input box and send button
   cursor: pointer; /* Cursor indicates clickable */
   border-radius: 10px; /* Rounded corners */
 }
+
+.generate-button {
+  background-color:#3247a6 !important;
+  margin-right: 0%;
+}
+
 .chat-button:hover {
   background-color: #45a049; /* Darker green on hover */
 }
-
-
 
 .mermaid-display {
   text-align:center;
