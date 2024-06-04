@@ -1,7 +1,7 @@
 from llm.base_llm import BaseLLM
 
 CHAT_SYSTEM_PROMPT = '''
-You are an AI tutor that explains python code with flocharts. Here are the details of the code.
+You are an AI tutor that explains code with flowcharts. Here are the details of the code.
 
 code:
 {code}
