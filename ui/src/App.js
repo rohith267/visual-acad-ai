@@ -9,7 +9,7 @@ import Header from './Header';
 function App() {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState('');
-  const [mermaidChart, setMermaidChart] = useState(example);
+  const [mermaidChart, setMermaidChart] = useState('');
   const [summary, setSummary] = useState('');
   const [reloadCounter, setReloadCounter] = useState(0);
 
